@@ -22,8 +22,14 @@ public class StudentController {
         StudentDto savedStudent = studentService.createStudent(studentDto);
         return new ResponseEntity<>(savedStudent, HttpStatus.CREATED);
 
+    }
 
+    @GetMapping("{id}")
+    public ResponseEntity<StudentDto> getStudentById(@PathVariable("id") Long studentID){
+        StudentDto studentDto = studentService.getStudentById(studentID);
+        return ResponseEntity.ok(studentDto);
 
     }
+
 
 }

@@ -2,6 +2,7 @@ package eek.webapplication.managementbackend.service.impl;
 
 import eek.webapplication.managementbackend.dto.StudentDto;
 import eek.webapplication.managementbackend.entity.Student;
+import eek.webapplication.managementbackend.exception.ResourceNotFoundException;
 import eek.webapplication.managementbackend.mapper.StudentMapper;
 import eek.webapplication.managementbackend.repository.StudentRepository;
 import eek.webapplication.managementbackend.service.StudentService;
@@ -21,5 +22,13 @@ public class StudentServiceImpl implements StudentService {
         Student savedStudent = studentRepository.save(student);
 
         return StudentMapper.mapToStudentDto(savedStudent);
+    }
+
+    @Override
+    public StudentDto getStudentById(Long studentId) {
+        Student student = studentRepository.findById(studentId).orElseThrow(() ->
+                new ResourceNotFoundException("Student with" + studentId + " does not exist"));
+
+        return StudentMapper.mapToStudentDto(student);
     }
 }
