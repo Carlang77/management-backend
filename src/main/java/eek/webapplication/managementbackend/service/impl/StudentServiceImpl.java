@@ -9,6 +9,9 @@ import eek.webapplication.managementbackend.service.StudentService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Service
 @AllArgsConstructor
@@ -30,5 +33,11 @@ public class StudentServiceImpl implements StudentService {
                 new ResourceNotFoundException("Student with" + studentId + " does not exist"));
 
         return StudentMapper.mapToStudentDto(student);
+    }
+
+    @Override
+    public List<StudentDto> getAllStudents() {
+        List <Student> students = studentRepository.findAll();
+        return students.stream().map((student) ->StudentMapper.mapToStudentDto(student)).collect(Collectors.toList());
     }
 }

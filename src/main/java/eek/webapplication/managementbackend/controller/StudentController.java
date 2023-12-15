@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/students")
@@ -29,6 +31,13 @@ public class StudentController {
         StudentDto studentDto = studentService.getStudentById(studentID);
         return ResponseEntity.ok(studentDto);
 
+    }
+
+
+    @GetMapping
+    public ResponseEntity<List<StudentDto>> getAllStudents(){
+        List<StudentDto> students = studentService.getAllStudents();
+        return ResponseEntity.ok(students);
     }
 
 
