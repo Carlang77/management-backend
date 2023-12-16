@@ -30,7 +30,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public StudentDto getStudentById(Long studentId) {
         Student student = studentRepository.findById(studentId).orElseThrow(() ->
-                new ResourceNotFoundException("Student with" + studentId + " does not exist"));
+                new ResourceNotFoundException("Student with " + studentId + " does not exist"));
 
         return StudentMapper.mapToStudentDto(student);
     }
@@ -39,5 +39,30 @@ public class StudentServiceImpl implements StudentService {
     public List<StudentDto> getAllStudents() {
         List <Student> students = studentRepository.findAll();
         return students.stream().map((student) ->StudentMapper.mapToStudentDto(student)).collect(Collectors.toList());
+    }
+
+    @Override
+    public StudentDto updateStudent(Long studentId, StudentDto updatedStudent) {
+
+Student student = studentRepository.findById(studentId).orElseThrow(
+                () -> new ResourceNotFoundException("Student with the " + studentId + " does not exist")
+);
+        student.setFirstName(updatedStudent.getFirstName());
+        student.setLastName(updatedStudent.getLastName());
+        student.setEmail(updatedStudent.getEmail());
+
+        Student updatedStudentObj =  studentRepository.save(student);
+
+        return StudentMapper.mapToStudentDto(updatedStudentObj);
+    }
+
+    @Override
+    public void deleteStudent(Long studentId) {
+
+        Student student = studentRepository.findById(studentId).orElseThrow(
+                () -> new ResourceNotFoundException("Student with the " + studentId + " does not exist")
+        );
+
+        studentRepository.deleteById(studentId);
     }
 }
