@@ -50,5 +50,7 @@ public class StudentIntegrationTest {
                 // Print the request and response for debugging
                 .andDo(print());
 
-        /
+
+    }
+
 }
